@@ -10,7 +10,7 @@
 		echo $_POST['name'].'-'.$_POST['email'];
 	}
 	?>
-	<form nam="addUser" action="#" method="post"> 
+	<form name="addUser" action="#" method="post"> 
 		<!-- method="get" -->
 		<p>name:<input type="text" name="name"></p>
 		<p>email:<input type="email" name="email"></p>
