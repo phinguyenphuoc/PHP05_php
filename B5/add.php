@@ -48,14 +48,24 @@
 			}else{
 				$date = $_POST['date'];
 			}
+			//--------------------
+			$imageAvatar = $_FILES['avatar'];
+			var_dump($imageAvatar);
+			// 1. lay duoc ten anh de luu vao database
+			$avatar = $imageAvatar['name'];
+			$pathSave = 'uploads/'.$avatar;
+			// 2. Upload anh len thu muc luu tru
+			move_uploaded_file($imageAvatar['tmp_name'], $pathSave);
+			//--------------------------------
 			if($flag){
 				echo "dang ki thanh cong";
-				$sql = "INSERT INTO products(name,price,description,date) VALUES('$name', '$price', '$des','$date')";
+				$sql = "INSERT INTO products(name,price,description,image,date) VALUES('$name', '$price', '$des', '$avatar', '$date')";
 				mysqli_query($con, $sql);
+				header("Location: THmysql.php");
 			}
 		}
 	?>
-	<form name="add_form" action="#" method="post">
+	<form name="add_form" action="#" method="post"  enctype="multipart/form-data">
 		<p>Name:
 			<?php echo $errname ?>
 			<input type="text" name="name">
@@ -69,7 +79,7 @@
 			<input type="text" name="description">
 		</p>
 		<p>Image:
-			<input type="file" name="pic" accept="image/*">
+			<input type="file" name="avatar">
 		</p>
 		<p>Date
 			<?php echo $errdate ?>

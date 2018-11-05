@@ -12,9 +12,10 @@
 	$result = mysqli_query($con,$fetch);
 	if ($result->num_rows > 0) {
 		while($row = $result->fetch_assoc()) {
-			echo "id: " . $row["id"]. " - Name: " . $row["name"]. " - Price: " . $row["price"]." - descriptionn: " . $row["description"]. " - Image: " . " - date: " . $row['date'] . "    ";
-			echo "<a href='edit.php'>Edit</a> <br>";	
-			// echo "<a href='delete_user.php?id=$id'>DELETE</a>";
+			$id=$row['id'];
+			echo "id: " . $row["id"]. " - Name: " . $row["name"]. " - Price: " . $row["price"]." - descriptionn: " . $row["description"]. " - Image: " .$row['image']. " - date: " . $row['date'] . "    ";
+			echo "<a href='edit.php?id=$id'>Edit   |</a>";	
+			echo "<a href='delete.php?id=$id'>   DELETE</a> <br>";
 		}
 	} else {
 		echo "0 results";
