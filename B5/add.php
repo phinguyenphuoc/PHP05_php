@@ -18,6 +18,7 @@
 		$errprice="";
 		$errdes="";
 		$errdate="";
+		$errimage = "";
 		$name="";
 		$price="";
 		$des="";
@@ -48,15 +49,17 @@
 			}else{
 				$date = $_POST['date'];
 			}
-			//--------------------
 			$imageAvatar = $_FILES['avatar'];
-			var_dump($imageAvatar);
+			if($imageAvatar['type']==NULL){
+				$errimage="vui long chon anh";
+				$flag=false;
+			}else{
 			// 1. lay duoc ten anh de luu vao database
-			$avatar = $imageAvatar['name'];
-			$pathSave = 'uploads/'.$avatar;
+				$avatar = $imageAvatar['name'];
+				$pathSave = 'uploads/'.$avatar;
 			// 2. Upload anh len thu muc luu tru
 			move_uploaded_file($imageAvatar['tmp_name'], $pathSave);
-			//--------------------------------
+			}
 			if($flag){
 				echo "dang ki thanh cong";
 				$sql = "INSERT INTO products(name,price,description,image,date) VALUES('$name', '$price', '$des', '$avatar', '$date')";
@@ -79,6 +82,7 @@
 			<input type="text" name="description">
 		</p>
 		<p>Image:
+			<?php echo $errimage ?>
 			<input type="file" name="avatar">
 		</p>
 		<p>Date
