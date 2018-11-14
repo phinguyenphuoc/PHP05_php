@@ -10,8 +10,7 @@
 			$sql = "INSERT INTO products(name,price,description,image,date) VALUES('$name', '$price', '$des', '$avatar', '$date')";
 			mysqli_query($this->connect(), $sql);
 		}
-		function editProduct($name, $price, $des, $avatar, $date){
-			$id=$_GET['id'];
+		function editProduct($name, $price, $des, $avatar, $date, $id){
 			if($name!=''){
 				$sql = "UPDATE products SET name='$name' WHERE id=$id";
 				mysqli_query($this->connect(), $sql);

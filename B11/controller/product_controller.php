@@ -5,7 +5,7 @@
 			$action = isset($_GET['action'])?$_GET['action']:'home';
 				switch ($action) {
 					case 'home':
-						echo "abcss";
+						echo "Homepage";
 						break;
 					case 'list':
 						$listProduct = new productModel();
@@ -13,20 +13,74 @@
 						include 'view/list_products.php';
 						break;
 					case 'add':
-						include 'view/add_product.php';
+						$errname="";
+						$errprice="";
+						$errdes="";
+						$errdate="";
+						$errimage = "";
+						$name="";
+						$price="";
+						$des="";
+						$date="";
+						$avatar="";
+						$flag=true;
 						if(isset($_POST['submit'])){
+							if(($_POST['name'])==NUll){
+								$errname = "vui long nhap ten <br>";
+								$flag=false;
+							}else{
+								$name = $_POST['name'];
+							}
+							if (($_POST['price'])==NUll) {
+								$errprice = "vui long nhap gia <br>";
+								$flag=false;
+							}else{
+								$price = $_POST['price'];
+							}
+							if (($_POST['price'])==NUll) {
+								$errdes = "vui long nhap mo ta <br>";
+								$flag=false;
+							}else{
+								$des = $_POST['description'];
+							}
+							if (($_POST['date'])==NUll) {
+								$errdate = "vui long nhap ngay<br>";
+								$flag=false;
+							}else{
+								$date = $_POST['date'];
+							}
+							$imageAvatar = $_FILES['avatar'];
+							if($imageAvatar['type']==NULL){
+								$errimage="vui long chon anh";
+								$flag=false;
+							}else{
+								// 1. lay duoc ten anh de luu vao database
+								$avatar = $imageAvatar['name'];
+								//	$pathSave = 'uploads/'.$avatar;
+								// 2. Upload anh len thu muc luu tru
+								//move_uploaded_file($imageAvatar['tmp_name'], $pathSave);
+							}
 							if($flag==true){
-							$add = new productModel();
-							$add->addProduct($name, $price, $des, $avatar, $date);
+								$add = new productModel();
+								$add->addProduct($name, $price, $des, $avatar, $date);
 							}
 						}
+						include 'view/add_product.php';
 						break;
 					case 'edit':
-						include 'view/edit.php';
+						
 						if(isset($_POST['submit'])){
+							$id=$_GET['id']; 
+							$name = $_POST['name'];
+							$price = $_POST['price'];
+							$des = $_POST['description'];
+							$date = $_POST['date'];
+							$imageAvatar = $_FILES['avatar'];
+							$avatar = $imageAvatar['name'];
 							$edit = new productModel();
-							$edit->editProduct($name, $price, $des, $avatar, $date);
+							$edit->editProduct($name, $price, $des, $avatar, $date, $id);
 						}
+						include 'view/edit.php';
 						break;
 					default:
 						# code...
