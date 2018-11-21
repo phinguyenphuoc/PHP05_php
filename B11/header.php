@@ -130,7 +130,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php?action=list"><i class="fa fa-circle-o"></i> List product</a></li>
+            <li><a href="index.php?action=list"><i class="fa fa-circle-o"></i>List product</a></li>
             <li class="active"><a href="index.php?action=add"><i class="fa fa-circle-o"></i>Add product</a></li>
           </ul>
         </li>

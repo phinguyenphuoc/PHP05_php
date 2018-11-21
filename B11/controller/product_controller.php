@@ -26,32 +26,32 @@
 						$flag=true;
 						if(isset($_POST['submit'])){
 							if(($_POST['name'])==NUll){
-								$errname = "vui long nhap ten <br>";
+								$errname = "<br>vui long nhap ten <br>";
 								$flag=false;
 							}else{
 								$name = $_POST['name'];
 							}
 							if (($_POST['price'])==NUll) {
-								$errprice = "vui long nhap gia <br>";
+								$errprice = "<br>vui long nhap gia <br>";
 								$flag=false;
 							}else{
 								$price = $_POST['price'];
 							}
 							if (($_POST['price'])==NUll) {
-								$errdes = "vui long nhap mo ta <br>";
+								$errdes = "<br>vui long nhap mo ta <br>";
 								$flag=false;
 							}else{
 								$des = $_POST['description'];
 							}
 							if (($_POST['date'])==NUll) {
-								$errdate = "vui long nhap ngay<br>";
+								$errdate = "<br>vui long nhap ngay<br>";
 								$flag=false;
 							}else{
 								$date = $_POST['date'];
 							}
 							$imageAvatar = $_FILES['avatar'];
 							if($imageAvatar['type']==NULL){
-								$errimage="vui long chon anh";
+								$errimage="<br>vui long chon anh";
 								$flag=false;
 							}else{
 								// 1. lay duoc ten anh de luu vao database
@@ -68,9 +68,9 @@
 						include 'view/add_product.php';
 						break;
 					case 'edit':
-						
+						include 'view/edit.php';
 						if(isset($_POST['submit'])){
-							$id=$_GET['id']; 
+							$id = $_GET['id']; 
 							$name = $_POST['name'];
 							$price = $_POST['price'];
 							$des = $_POST['description'];
@@ -80,8 +80,15 @@
 							$edit = new productModel();
 							$edit->editProduct($name, $price, $des, $avatar, $date, $id);
 						}
-						include 'view/edit.php';
+						//include 'view/edit.php';
 						break;
+					case 'delete':
+						$id = $_GET['id'];
+						$del = new productModel();
+						$del->delProduct($id);
+						$listProduct = new productModel();
+						$result = $listProduct->getList();
+						include 'view/list_products.php';
 					default:
 						# code...
 						break;

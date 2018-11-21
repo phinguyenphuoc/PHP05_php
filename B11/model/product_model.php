@@ -28,11 +28,15 @@
 				mysqli_query($this->connect(), $sql);
 			}
 			$imageAvatar = $_FILES['avatar'];
-			if($imageAvatar!=''){
+			if($imageAvatar['type']!=''){
 				$avatar = $imageAvatar['name'];
 				$sql = "UPDATE products SET image='$avatar' WHERE id=$id";
 				mysqli_query($this->connect(), $sql);
 			}
+		}
+		function delProduct($id){
+			$sql = "DELETE FROM products WHERE id=$id";
+			mysqli_query($this->connect(), $sql);
 		}
 	}
 ?>
