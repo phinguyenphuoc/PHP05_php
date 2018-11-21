@@ -3,24 +3,24 @@
         <div class="form-group">
             <label for="exampleInputEmail1">Name</label>
 
-            <input type="text" class="form-control" name="name">
+            <input type="text" class="form-control" name="name" value="<?php echo $name ?>">
         </div>
         <div class="form-group">
             <label for="exampleInputPassword1">Price</label>
 
-            <input type="text" class="form-control" name="price">
+            <input type="text" class="form-control" name="price" value="<?php echo $price ?>">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Description</label>
 
-            <input type="text" class="form-control" name="description">
+            <input type="text" class="form-control" name="description" value="<?php echo $des ?>">
         </div>
         <div class="form-group">
             <label for="exampleInputFile">File input</label>
 
             <input type="file" name="avatar" accept="image/*">
 
-            <p class="help-block">Example block-level help text here.</p>
+            <p class="help-block"><?php echo $avatar ?></p>
         </div>
         <div class="input-group date">
 
@@ -28,7 +28,7 @@
             <div class="input-group-addon">
                 <i class="fa fa-calendar"></i>
             </div>
-            <input type="date" class="form-control pull-right" id="datepicker" name="date">
+            <input type="date" class="form-control pull-right" id="datepicker" name="date" value="<?php echo $date ?>">
             </div>
         </div>
 	    </div>

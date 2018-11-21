@@ -68,7 +68,19 @@
 						include 'view/add_product.php';
 						break;
 					case 'edit':
-						include 'view/edit.php';
+						//include 'view/edit.php';
+						$id = $_GET['id'];
+						$listProduct2 = new productModel();
+						$result = $listProduct2->getLista($id);
+						if ($result->num_rows > 0) {
+						    while($row = $result->fetch_assoc()) {
+						       $name=$row['name'];
+						       $price=$row['price'];
+						       $des=$row['description'];
+						       $date=$row['date'];
+						       $avatar=$row['image'];
+						    }
+						}
 						if(isset($_POST['submit'])){
 							$id = $_GET['id']; 
 							$name = $_POST['name'];
@@ -76,11 +88,14 @@
 							$des = $_POST['description'];
 							$date = $_POST['date'];
 							$imageAvatar = $_FILES['avatar'];
-							$avatar = $imageAvatar['name'];
+							if($imageAvatar['type']!=NULL){
+								$avatar = $imageAvatar['name'];	
+							}
 							$edit = new productModel();
 							$edit->editProduct($name, $price, $des, $avatar, $date, $id);
+							header("location: index.php?action=list");
 						}
-						//include 'view/edit.php';
+						include 'view/edit.php';
 						break;
 					case 'delete':
 						$id = $_GET['id'];
