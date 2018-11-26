@@ -63,6 +63,7 @@
 							if($flag==true){
 								$add = new productModel();
 								$add->addProduct($name, $price, $des, $avatar, $date);
+								header("location: index.php?action=list");
 							}
 						}
 						include 'view/add_product.php';
