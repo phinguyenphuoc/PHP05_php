@@ -2,7 +2,7 @@
   <!-- =============================================== -->
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="border: 1px solid green">
+  <div class="content-wrapper">
    	<?php  
 		include 'controller/product_controller.php';
 		$handle = new homeController();
