@@ -8,6 +8,7 @@
 		function connect(){
 			$this->connect = mysqli_connect($this->server, $this->username, $this->password, $this->database);		
 			return $this->connect;
+			
 		}	
 	}
 	
