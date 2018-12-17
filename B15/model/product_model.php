@@ -38,18 +38,22 @@
 		}
 		function login($username, $password){
 			$pass = md5($password);
-			$sql = "SELECT username,password FROM users";
-			$temp = '';
+			$sql = "SELECT id,username,password FROM users";
+			$id = '';
 			$result = mysqli_query($this->connect(), $sql);
 			if ($result->num_rows > 0) {
 			    while($row = $result->fetch_assoc()) {
 			    	if($row['username']==$username && $row['password']==$pass){
-			    		$temp=$username;
+			    		$id=$row['id'];
 			    		break;
 			    	}
 			    }
 			}
-			return $temp; 
+			return $id; 
+		}
+		function addReview($comment, $user_id){
+			$sql = "INSERT INTO rate_comments(comment,user_id) VALUES('$comment','$user_id')";
+			mysqli_query($this->connect(), $sql);
 		}	
 	}
 ?>

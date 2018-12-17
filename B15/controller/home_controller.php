@@ -1,6 +1,7 @@
 <?php
 	include 'model/product_model.php';
 	class homeController{
+		public $i=0;
 		function handleRequest(){
 			$action = isset($_GET['action'])?$_GET['action']:'home';
 				switch ($action) {
@@ -92,7 +93,7 @@
 								}
 								if($flag==true){
 									$handleCate->addCategory($category);
-								}else{
+		addReview();						}else{
 									$errcate = 'category da ton tai';
 								}
 							}
@@ -103,7 +104,16 @@
 						$id = $_GET['id'];
 						$list = new productModel();
 						$row = $list->getLista($id);
+						$comment = '';
 						include 'view/single_product.php';
+						if(isset($_POST['submit'])){
+							if($_SESSION['$user_id']==''){
+								header("location: index.php?action=login");
+							}else{
+								$comment = $_POST['comment'];
+								$list->addReview($comment, $_SESSION['$user_id']);
+							}
+						}
 						break;
 					case 'login':
 						$username = '';
@@ -112,9 +122,10 @@
 							$username = $_POST['username'];
 							$password = $_POST['password'];
 							$login = new productModel();
-							$_SESSION['$username'] = $login->login($username,$password);
-							if($_SESSION['$username']!=''){
+							$_SESSION['$user_id'] = $login->login($username,$password);
+							if($_SESSION['$user_id']!=''){
 								echo "dang nhap thanh cong";
+								var_dump($_SESSION['$user_id']);
 							}else {
 								echo "dang nhap that bai";
 							}
@@ -134,6 +145,28 @@
 						}	
 						include 'view/regist.php';
 						break;
+					case 'cart':
+						$id = $_GET['product'];
+						$num = 0;
+						$key = array();
+						if($id!=''){
+							$cart[$id] = array('id' => $id, 'quantity' => 1);
+							$_SESSION['cart'][$id]=$cart[$id];
+							$num = 1;
+						}
+						if(isset($_POST['update_cart'])){
+							$num = $_POST['quantity'];
+							$cart[$id] = array('id' => $id, 'quantity' => $num);
+							$_SESSION['cart'][$id]=$cart[$id];
+						}
+						$key = array_keys($_SESSION['cart']);
+						$count = count($key);
+						include 'view/cart.php';
+						break;
+					case 'unset':
+						$id = $_GET['id'];
+						unset($_SESSION['cart'][$id]);
+						header("location: index.php?action=cart");
 				}
 		}
 	}
