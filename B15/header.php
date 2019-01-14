@@ -40,8 +40,10 @@
                             <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li><a href="cart.html"><i class="fa fa-user"></i> My Cart</a></li>
-                            <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li>
                             <li><a href="index.php?action=login"><i class="fa fa-user"></i> Login</a></li>
+                            <?php if(isset($_SESSION['login'])): ?>
+                            <li><a href="index.php?action=logout"><i class="fa fa-user"></i> Logout</a></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
@@ -107,10 +109,12 @@
                         <li class="active"><a href="index.php?action=home">Home</a></li>
                         <li><a href="index.php?action=shop&quantity=8">Shop page</a></li>
                         <li><a href="index.php?action=cart">Cart</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
+                        <li><a href="index.php?action=checkout">Checkout</a></li>
                         <li><a href="#">Category</a></li>
+                        <?php if(isset($_SESSION['login']) && $_SESSION['role']==1):?>
                         <li><a href="index.php?action=add_product">Add Product</a></li>
                         <li><a href="index.php?action=add_category">Add Catogory</a></li>
+                        <?php endif;?>
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>  

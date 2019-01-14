@@ -93,7 +93,7 @@
 								}
 								if($flag==true){
 									$handleCate->addCategory($category);
-		addReview();						}else{
+								}else{
 									$errcate = 'category da ton tai';
 								}
 							}
@@ -107,30 +107,36 @@
 						$comment = '';
 						include 'view/single_product.php';
 						if(isset($_POST['submit'])){
-							if($_SESSION['$user_id']==''){
+							if($_SESSION['login']==''){
 								header("location: index.php?action=login");
 							}else{
 								$comment = $_POST['comment'];
-								$list->addReview($comment, $_SESSION['$user_id']);
+								$list->addReview($comment, $_SESSION['login']);
 							}
 						}
 						break;
 					case 'login':
+						include 'view/login.php';
 						$username = '';
 						$password = '';
 						if(isset($_POST['login'])){
 							$username = $_POST['username'];
 							$password = $_POST['password'];
 							$login = new productModel();
-							$_SESSION['$user_id'] = $login->login($username,$password);
-							if($_SESSION['$user_id']!=''){
+							$_SESSION['login'] = $login->login($username,$password);
+							if($_SESSION['login']!=''){
 								echo "dang nhap thanh cong";
-								var_dump($_SESSION['$user_id']);
+								$_SESSION['role'] = $login->getRole($_SESSION['login']);
+								header("location: index.php");
 							}else {
 								echo "dang nhap that bai";
 							}
 						}
-						include 'view/login.php';
+						break;
+					case 'logout':
+						unset($_SESSION['login']);
+						unset($_SESSION['role']);
+						header("location: index.php");
 						break;
 					case 'regist':
 						$name = '';
@@ -145,20 +151,37 @@
 						}	
 						include 'view/regist.php';
 						break;
-					case 'cart':
+					case 'add_cart':
 						$id = $_GET['product'];
-						$num = 0;
+						$_SESSION['num'] = 0;
 						$key = array();
 						if($id!=''){
 							$cart[$id] = array('id' => $id, 'quantity' => 1);
 							$_SESSION['cart'][$id]=$cart[$id];
-							$num = 1;
+							$_SESSION['num'] = 1;
 						}
 						if(isset($_POST['update_cart'])){
-							$num = $_POST['quantity'];
+							$_SESSION['num'] = $_POST['quantity'];
 							$cart[$id] = array('id' => $id, 'quantity' => $num);
 							$_SESSION['cart'][$id]=$cart[$id];
 						}
+						header("location: index.php?action=shop&quantity=8");
+						break;
+					case 'cart':
+						//$id = $_GET['product'];
+						$num = $_SESSION['num'];
+						$key = array();
+						// if($id!=''){
+						// 	$cart[$id] = array('id' => $id, 'quantity' => 1);
+						// 	$_SESSION['cart'][$id]=$cart[$id];
+						// 	$num = 1;
+						// }
+						// if(isset($_POST['update_cart'])){
+						// 	$num = $_POST['quantity'];
+						// 	$cart[$id] = array('id' => $id, 'quantity' => $num);
+						// 	$_SESSION['cart'][$id]=$cart[$id];
+						// }
+
 						$key = array_keys($_SESSION['cart']);
 						$count = count($key);
 						include 'view/cart.php';
@@ -167,6 +190,15 @@
 						$id = $_GET['id'];
 						unset($_SESSION['cart'][$id]);
 						header("location: index.php?action=cart");
+						break;
+					case 'checkout':
+						if($_SESSION['login']!=''){
+							$price = 0;
+							include 'view/checkout.php';
+						}else{
+							header("location: index.php?action=login");
+						}
+						break;
 				}
 		}
 	}

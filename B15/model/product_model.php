@@ -51,6 +51,12 @@
 			}
 			return $id; 
 		}
+		function getRole($id){
+			$sql = "SELECT role_id FROM users WHERE id=$id ";
+			$result = mysqli_query($this->connect(), $sql);
+			$row = $result->fetch_assoc();
+			return $row['role_id'];
+		}
 		function addReview($comment, $user_id){
 			$sql = "INSERT INTO rate_comments(comment,user_id) VALUES('$comment','$user_id')";
 			mysqli_query($this->connect(), $sql);
